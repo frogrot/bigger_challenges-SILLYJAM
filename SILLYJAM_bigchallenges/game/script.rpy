@@ -25,22 +25,18 @@ label Pom:
     As he turns and notices you, you hear a soft, kind voice escape his lips."
 
     ## BEGIN POM DIALOGUE
-    pom "Good morning! How can I help ya?"
+    pom "Good morning! How can I help you?"
 
-    "His dress sense confounds you."
-
-    "A brown, patched up apron rests gently upon a muddied collared shirt, which once upon a time must have been rather elegant. 
-    His face is adorned by large round gold-trimmed glasses, giving his eyes a large, kind appearance."
-
-    "He sits surrounded by a variety of pots, each with its own magnificent type of plant sprouting within. 
-    Stunning bouquets sit in glass vases, swaying gently with the train's movements." 
+    "His dress sense confounds you. A brown, patched up apron rests gently over a muddied collared shirt, which once upon a time must have been quite elegant.
+    On his face sit large,  gold-trimmed glasses, giving his eyes a kind air."
     
-    "Some of his pots have spilt over, leaving small patches of dirt upon the upholstery."
+    "He sits surrounded by a variety of pots, holding them like a proud father holds his children. And yet, he doesn’t smile."
+    "Stunning bouquets sit in glass vases, swaying gently with the train's movements. Some of his pots have spilt over, leaving small patches of dirt on the upholstery. "
 
     ## === MAJOR CHOICE 1 ===
     menu:
         "Tickets please!":                                  #1A
-            show pom neutral
+            show pom talking
             #jump 1A
             pom "Here you are, sir."
             "As the man hands you his ticket, you notice his hand shaking. Despite his sunny demeanor, he is clearly plagued by something."
@@ -53,7 +49,7 @@ label Pom:
                         "How so?":
                             jump pom_JOIN1
 
-                "What’s making you shake so much? The flowers smell much too nice to be this nervous!":
+                "These flowers are absolutely delightful, what are you going to get up to in New Key?":
                     jump pom_1B
 
         "Lovely little green-house you’ve built in here!":  #1B
@@ -72,7 +68,7 @@ label Pom:
 
             menu:
                 "Sorry--I, er, flew a bit off the handle there. Are you doing alright son?":
-                    pom "Not at all honestly. See all these flowers? i was going to take them to a competition in New Key but I’ll never win with these..."
+                    pom "Honestly, not at all. See all these flowers? I was going to take them to a competition in New Key but I’ll never win with these..."
                     menu:
                         "How come?":
                             jump pom_JOIN1
@@ -83,6 +79,7 @@ label Pom:
                     jump pom_BADEND
 
     label pom_JOIN1:
+        show pom worried
         pom "I mean, look at them! I forgot the daisies at home, nobody’s going to think forgetmenots are interesting, and worst of all, my roses aren’t even red!"
         pom "A right mess I am, I should have never even boarded this train..."
 
@@ -91,27 +88,32 @@ label Pom:
         ## === MAJOR CHOICE 1 ===
         menu:
             "Alright lad, settle down, settle down. Why don’t you tell me your name and what this is all about?":
+                show pom talking
                 pom "I’m Pom. I've been preparing to compete at the Gardener's Fair for months, but now I’ve made a right mess of things."
                 pom "Red roses, lively lilies, that’s the kind of bouquet you need to win a competition! Not my pale roses and little specks of blue."
                 jump pom_JOIN2
 
             "*Lay your arm around his shoulder* I’m sure we can figure something out, no?":
+                show pom talking
                 pom "Trust me, sir, I’ve tried. A bike almost hit me on my way to the station and I was only able to grab these before hurrying to the train; and now I’ve lost my prize-winning blooms..."
                 pom "*mumbling* Pom, you’re a right dolt."
                 jump pom_JOIN2
 
             "You’re not wrong lad, those flowers look worse than the bramble on my grandmother’s house...":
+                show pom sad
                 "The young man tears up. His face turns red as he turns away from you and starts to cry quietly."
                 pom "God, I’m such a bloody dimwit. I shouldn’t’ve  gotten on this train..."
                 $ pomBad = True
                 jump pom_BADEND
 
     label pom_JOIN2:
+        show pom neutral
         "Pom gestures towards the pots and bouquets. Lively little forgetmenots bloom in them, so small and numerous you cannot help but smile."
         "Besides them stand peach roses, white yarrow flowers and some other pale yellow blossoms you don’t recognise. Each flower seems more beautiful than the last."
         
         menu:
             "*Put some flowers together into a bouquet* I’m no florist, but these look rather nice together, don’t they?":
+                show pom worried
                 pom "I mean, they are my favourites. But nobody’s ever won with colours like these, I don’t even know if anyone’s tried! You’d have to be mad to."
                 jump pom_JOIN4
 
@@ -129,12 +131,14 @@ label Pom:
         menu:
             "This could be your chance! If I were a judge, I’d be bored to death of seeing the same old things over and over again.":
                 "Pom looks up, his eyes no longer wet with tears."
+                show pom hopeful
                 pom "You’re right, I know I am. Maybe you are right and I just need to show them what they’re missing out on!"
                     #jump pom_JOIN5
 
             "If I were you, I’d much rather compete and lose with flowers I love rather than suck up to some old geezer with bad taste.":
                 jump pom_JOIN5
     label pom_JOIN5: #POM GOOD ENDING
+        show pom happy
         "Light seems to come back into the young gardener's eyes as inspiration takes hold."
         pom "I’ll compete. Even if I lose, I’ll have my flowers."
         pom "And they’ll still be quite nice for the city people to look at. It’s not everyday you get to show off your hard work to an entire city after all!"

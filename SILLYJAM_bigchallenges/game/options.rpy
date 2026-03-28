@@ -30,10 +30,10 @@ define config.version = "1.0"
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
-This is Team Bigger Challenges (Baz + Trin)'s submission for the Jerbob SILLY JAM!! 
+This is Team Bigger Challenges (Basil + Trin)'s submission for the Jerbob SILLY JAM!! 
 This is a simple visual novel based on the theme \"Go to Town\".
 
-We're both artists who are new to programming, but we hope you enjoy our game :)
+This is Basil's first ever game jam, and Trin's first foray into programming for games, but we hope you enjoy our creation! :)
 """)
 
 
