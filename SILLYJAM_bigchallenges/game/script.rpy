@@ -1,5 +1,6 @@
 ﻿# CHARACTERS
 define pom = Character("Pom")
+define wiz = Character("Wizard")
 
 #VARIABLES
 define grandScore = 0 
@@ -11,7 +12,7 @@ label start:
 
 ## POM CHARACTER ARC
 label Pom:
-    scene bg traincar_interior
+    scene bg compartment
     with fade
     show pom neutral
 
@@ -25,6 +26,7 @@ label Pom:
     As he turns and notices you, you hear a soft, kind voice escape his lips."
 
     ## BEGIN POM DIALOGUE
+    show pom talking
     pom "Good morning! How can I help you?"
 
     "His dress sense confounds you. A brown, patched up apron rests gently over a muddied collared shirt, which once upon a time must have been quite elegant.
@@ -36,11 +38,11 @@ label Pom:
     ## === MAJOR CHOICE 1 ===
     menu:
         "Tickets please!":                                  #1A
-            show pom talking
+            show pom happy
             #jump 1A
             pom "Here you are, sir."
             "As the man hands you his ticket, you notice his hand shaking. Despite his sunny demeanor, he is clearly plagued by something."
-            
+            show pom neutral
             menu: 
                 "By Jove, your hands are shaking! Are you alright, lad?":
                     pom "Frankly? Not really, no. See all these plants? I was taking them into town to compete at the New Key Gardener’s Fair." 
@@ -68,6 +70,7 @@ label Pom:
 
             menu:
                 "Sorry--I, er, flew a bit off the handle there. Are you doing alright son?":
+                    show pom worried
                     pom "Honestly, not at all. See all these flowers? I was going to take them to a competition in New Key but I’ll never win with these..."
                     menu:
                         "How come?":
@@ -84,7 +87,7 @@ label Pom:
         pom "A right mess I am, I should have never even boarded this train..."
 
         "The young man tears up. His face turns red as he turns away from you in shame."
-    
+        show pom sad
         ## === MAJOR CHOICE 1 ===
         menu:
             "Alright lad, settle down, settle down. Why don’t you tell me your name and what this is all about?":
@@ -128,6 +131,7 @@ label Pom:
         pom "Though, I can’t remember ever seeing anyone else compete with colours like these..."
         jump pom_JOIN4
     label pom_JOIN4:
+        show pom neutral
         menu:
             "This could be your chance! If I were a judge, I’d be bored to death of seeing the same old things over and over again.":
                 "Pom looks up, his eyes no longer wet with tears."
