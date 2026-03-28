@@ -7,7 +7,11 @@ define grandScore = 0
 define pomBad = False
 
 label start:
-    scene bg train_outside
+    window hide dissolve
+    pause 1.0
+    scene bg with dissolve
+    pause 1.0
+    window show dissolve
     "Bigger Challenges' SILLY JAM Entry"
 
 ## POM CHARACTER ARC
@@ -27,8 +31,10 @@ label Pom:
 
     ## BEGIN POM DIALOGUE
     show pom talking
+    
     pom "Good morning! How can I help you?"
 
+    show pom neutral
     "His dress sense confounds you. A brown, patched up apron rests gently over a muddied collared shirt, which once upon a time must have been quite elegant.
     On his face sit large,  gold-trimmed glasses, giving his eyes a kind air."
     
@@ -84,6 +90,7 @@ label Pom:
     label pom_JOIN1:
         show pom worried
         pom "I mean, look at them! I forgot the daisies at home, nobody’s going to think forgetmenots are interesting, and worst of all, my roses aren’t even red!"
+        show pom sad
         pom "A right mess I am, I should have never even boarded this train..."
 
         "The young man tears up. His face turns red as he turns away from you in shame."
@@ -153,8 +160,7 @@ label Pom:
 
     label pom_BADEND:
         if pomBad:
-            scene bg stopped train
-
+            scene bg boarding
             "The train comes to a slow stop at Rosegarden Station."
             "With his head hung low, the young man exits the train. The smell of roses fades, returning you to your world of leather and wood."
             "POM BAD ENDING :("
