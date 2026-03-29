@@ -1,29 +1,42 @@
 ﻿# CHARACTERS
-define pom = Character("Pom")
-define wiz = Character("Wizard")
+define pom = Character("Pom", color="#0e5d34")
+define wiz = Character("Wizard",color="#13489c")
 
 #VARIABLES
 define grandScore = 0 
 define pomBad = False
 
-label start:
-    window hide dissolve
-    pause 1.0
-    scene bg with dissolve
-    pause 1.0
-    window show dissolve
-    "Bigger Challenges' SILLY JAM Entry"
+label start:    #paper intro!
+    # pause 1.0
+    play sound "audio/sfx_paper.mp3" volume 10
+    show bg letter1 with dissolve
+    $ renpy.pause()
+    play sound "audio/sfx_paper.mp3" volume 10
+    show bg letter2 with dissolve
+    $ renpy.pause()
+    play sound "audio/sfx_paper.mp3" volume 10
+    show bg letter3 with dissolve
+    $ renpy.pause()
+    play sound "audio/sfx_paper.mp3" volume 10
+    show bg letter4 with dissolve
+    $ renpy.pause()
+    play sound "audio/sfx_paper.mp3" volume 5
+    play music "audio/bgm_train.mp3" fadein 0.5 volume 0.5 
+    play sound "audio/sfx_trainwhistle.mp3" volume 2
 
 ## POM CHARACTER ARC
 label Pom:
     scene bg compartment
     with fade
-    show pom neutral
+    
 
     ## SCENE INTRO/DESCRIPTION
     "You open the door to the compartment. As you enter, the train's gentle smell of worn leather and walnut wood fades,
     and you pick up a new scent–freshly cut flowers and…wet dirt?"
 
+    show pom neutral
+    with moveinright
+    
     "As you observe the passenger, you begin to understand."
 
     "Before you on the plush, blue velvet seats, a young man with wild hair stares out of the window. 
@@ -157,13 +170,16 @@ label Pom:
         "The smell of sweet peach roses and hopeful hyacinths follows you into the hallway as you close the sliding door behind you."
         "A smile hushes across your lips as you imagine Pom's beautiful flowers stunning all of New Key."
         "POM GOOD ENDING YIPPEE!!"
+        $ grandScore += 1
 
     label pom_BADEND:
         if pomBad:
             scene bg boarding
+            play sound "audio/sfx_talking.mp3" volume 0.2
             "The train comes to a slow stop at Rosegarden Station."
             "With his head hung low, the young man exits the train. The smell of roses fades, returning you to your world of leather and wood."
             "POM BAD ENDING :("
+            $ grandScore -= 1
 
     
 return
