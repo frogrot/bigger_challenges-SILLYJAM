@@ -387,8 +387,10 @@ label Samsa:
             "{i}Knock politely {/i} May I come in?":
                 "Unknown" "Hm? What? Oh yeah, come in."
                 play sound "audio/sfx_doorslide.mp3" volume 1
+                scene bg compartment with fade
             "Open the door":
                 play sound "audio/sfx_doorslide.mp3" volume 1
+                scene bg compartment with fade
         
         "As you open the door, a cold, primal fear grips your entire body."
         show samsa neutral
