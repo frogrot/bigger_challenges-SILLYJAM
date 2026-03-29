@@ -33,6 +33,8 @@ label start:    #paper intro!
     play sound "audio/sfx_paper.mp3" volume 1
     play music "audio/bgm_train.mp3" fadein 0.5 volume 0.2 
     play sound "audio/sfx_trainwhistle.mp3" volume 1
+    scene bg titlecard with dissolve
+    $ renpy.pause()
 
 ##  POM CHARACTER ARC
 label Pom:
@@ -73,8 +75,8 @@ label Pom:
             show pom neutral
             menu: 
                 "By Jove, your hands are shaking! Are you alright, lad?":
-                    pom "Frankly? Not really, no. See all these plants? I was taking them into town to compete at the New Key Gardener’s Fair." 
-                    pom "But as they are now, they nothing but a leafy green pile of rubbish. No way I’ll win anything with those."
+                    pom_idk "Frankly? Not really, no. See all these plants? I was taking them into town to compete at the New Key Gardener’s Fair." 
+                    pom_idk "But as they are now, they nothing but a leafy green pile of rubbish. No way I’ll win anything with those."
                     menu: 
                         "How so?":
                             jump pom_JOIN1
@@ -165,8 +167,8 @@ label Pom:
         menu:
             "This could be your chance! If I were a judge, I’d be bored to death of seeing the same old things over and over again.":
                 "Pom looks up, his eyes no longer wet with tears."
-                show pom hopeful
-                pom "You’re right, I know I am. Maybe you are right and I just need to show them what they’re missing out on!"
+                show pom talking
+                pom "You’re right, I know I am. Maybe you are right and I just need to show them what they’re missing out on..."
                     #jump pom_JOIN5
 
             "If I were you, I’d much rather compete and lose with flowers I love rather than suck up to some old geezer with bad taste.":
@@ -278,8 +280,9 @@ label Wizard:
             "Grasping his hand makes your stomach turn."
             "You feel cold and hot simultaneously, as if you’re suddenly struck with the heaviest of fevers."
             "Not a good look for a job interview."
-
+            show wizard neutral
             wiz "Likewise, dear boy! I have been in need of one ever since my dear...what was it? Daniel? Dan? D-Dog?"
+            show wizard thinking
             wiz "Can’t have been a very good one since he flew out the window like a half-empty bag of potatoes!"
             show wizard happy
             wiz "Here, sign this and we’ll get to work, dear boy!"
@@ -287,10 +290,11 @@ label Wizard:
             "A crusty, brown piece of parchment reading {i}“CONTRACT FOR {s}SHERLOCK{/s} {s}BRAM{/s} {s}AMOS{/s} NEW APPRENTICE” appears in his hand."
             "Before you know it, a pen appears in your hand, moving so independently you can barely stop yourself from signing the contract."
             "...Maybe this was a bad idea."
-
+            show wizard thinking
             wiz "Spectacular! Now, I will need some time to set up the experiment again; hopefully you perform better than whatever-his-name was."
+            show wizard neutral
             wiz "But for now, go! Tend to your obligations and I...shall call upon you when I most need you."
-
+            show wizard happy
             "The most bizarre grin you’ve ever had the displeasure of witnessing spreads across your new boss’s face as you shake his hand again."
             "As soon as he lets go, Magmodeus wiggles his fingers and you are pushed violently back out into the hall."
             
