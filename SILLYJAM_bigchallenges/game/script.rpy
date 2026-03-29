@@ -204,25 +204,28 @@ label Wizard:
         play sound "audio/sfx_explosion.mp3" volume 0.5
         "You flinch. Not at the sudden yell, but the explosion that follows immediately after."
 
-        show wiz shadowed
-        with moveinright
-
-        "Before you know what’s going on, the door comes to greet before you get a chance to, smashing both into you and the wall behind you. With a slight cough, you throw the door aside and get back on your feet."
+        "Before you know what’s going on, the door comes to greet before you get a chance to, smashing both into you and the wall behind you."
+        "With a slight cough, you throw the door aside and get back on your feet."
+        show wizard shadowed
+        with dissolve
         "Through the mist, you begin to recognise a shape: a tall, imposing figure walks towards you as you adjust your hat. For a moment, a cold shiver runs down your spine."
 
         "Unknown" "{b}WHO ARE YOU TO DISTURB MY MACHINATIONS?!{/b}"
 
         "As the dust settles, you realise that your fear might have been in vain."
         show wizard neutral
+        with dissolve
         "The figure standing before you is a small, bearded man cloaked in a dark blue cape."
         "The imposing height you feared but a second ago seems to come entirely from his star-spangled hat."
 
     menu:       #MAJOR CHOICE 1
         "{i}Intense coughing {/i} Tickets please!":
+            show wizard thinking
             wiz_idk "Ticket, yeeees, tickets. That is all they ask for, all they care for, but me, I have greater plans...machinations, even!"
             wiz_idk "Machinations a simple mind like yours could never comprehend!"
             menu: #Sub-choice 1a
                 "Ahem. Tickets. Please.":
+                    show wizard neutral
                     "The man looks at you with eyes filled to the brim with insanity."
                     "Without breaking eye-contact, he slowly reaches into his sleeve and pulls out a ticket."
                     "As you grab it, you realise how wet it is. The name, clearly written with a quill or some other old-fashioned implement, has become illegible."
@@ -251,12 +254,14 @@ label Wizard:
         show wizard neutral
         wiz "Experiments, my dear boy! I, Magmodeus the Staunch, Greatest Wizard of all the Realms, and of all time am conducting experiments of utmost importance! "
         wiz "I am to present my findings to the Wizarding Council of New Key this week, and I have yet to complete my writings!"
+        show wizard thinking
         wiz "Alack, my newest apprentice and keeper of the minutes has, mysteriously, gone missing! I could swear he was here a moment ago..."
     
         "The Wizard turns around, observing the window with an almost bemused expression."
         
         wiz "Ah...that explains it. Not the first time it has happened I suppose."
         
+        show wizard neutral
         "He turns back to you, staring into what you feel must be either the deepest corners of your soul, or absolutely nothing at all."
         "Finally, he extends his hand to you. His bony, pale, ice-cold hand."
         jump wiz_JOIN2
@@ -265,6 +270,7 @@ label Wizard:
         show wizard happy
         wiz "Magmodeus the Staunch, Greatest Wizard of all the Realms, and of all time, if I may say so myself!"
         wiz "You are? Well, it hardly matters."
+        
         wiz "Say, dear boy, are you in search of work? I need a young, virile fellow like yourself to aid me in my research!"
 
     menu:   #MAJOR CHOICE 2
@@ -302,6 +308,7 @@ label Wizard:
             wiz "None of them will see the big city now, but such is the price of progress!"
             menu:   #sub-choice 2B
                 "Have you ever considered that your work might be more successful if you didn’t need to...find new apprentices each day?":
+                    show wizard thinking
                     "A glimmer of something you can only describe as “morbid inspiration” filles Magmodeus’s eyes."
                     show wizard happy
                     "You see decrepit yellow teeth, standing in line like rotting ancient tomb stones, as a smile creeps across the Wizard’s face and widens into a disgusting cackle."
@@ -316,7 +323,7 @@ label Wizard:
                             $ grandScore += 1
 
                 "Am I going to die?":
-                    show wizard neutral
+                    show wizard thinking
                     wiz "What are you, a coward? Or worse...a rat?"
                     show wizard mad
                     wiz "{b}A FILTHY RAT SENT BY THE COUNCIL TO SPY ON MY MACHINATIONS?{/b}"
@@ -340,6 +347,7 @@ label Wizard:
             jump wiz_BADEND
     label wiz_BADEND:
             if wizBad:
+                
                 scene bg compartment
                 with hpunch
                 play sound "audio/sfx_explosion.mp3" volume 1
