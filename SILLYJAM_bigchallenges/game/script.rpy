@@ -1,34 +1,43 @@
 ﻿# CHARACTERS
+define pom_idk = Character("Forlorn Gardener")
 define pom = Character("Pom", color="#0e5d34")
-define wiz = Character("Wizard",color="#13489c")
 
-#VARIABLES
+define wiz_idk = Character("Rancid Small Man")
+define wiz = Character("Magmodeus the Staunch, Greatest Wizard of All the Realms",color="#13489c")
+
+define sam = Character("Gregor Samsa")
+
+## VARIABLES
 define grandScore = 0 
+#   Pom
 define pomBad = False
+#   Wiz
+define knowApprentice = False
+define wizBad = False
+define wizBadPre = False
 
 label start:    #paper intro!
     # pause 1.0
-    play sound "audio/sfx_paper.mp3" volume 10
+    play sound "audio/sfx_paper.mp3" volume 1
     show bg letter1 with dissolve
     $ renpy.pause()
-    play sound "audio/sfx_paper.mp3" volume 10
+    play sound "audio/sfx_paper.mp3" volume 1
     show bg letter2 with dissolve
     $ renpy.pause()
-    play sound "audio/sfx_paper.mp3" volume 10
+    play sound "audio/sfx_paper.mp3" volume 1
     show bg letter3 with dissolve
     $ renpy.pause()
-    play sound "audio/sfx_paper.mp3" volume 10
+    play sound "audio/sfx_paper.mp3" volume 1
     show bg letter4 with dissolve
     $ renpy.pause()
-    play sound "audio/sfx_paper.mp3" volume 5
-    play music "audio/bgm_train.mp3" fadein 0.5 volume 0.5 
-    play sound "audio/sfx_trainwhistle.mp3" volume 2
+    play sound "audio/sfx_paper.mp3" volume 1
+    play music "audio/bgm_train.mp3" fadein 0.5 volume 0.2 
+    play sound "audio/sfx_trainwhistle.mp3" volume 1
 
-## POM CHARACTER ARC
+##  POM CHARACTER ARC
 label Pom:
     scene bg compartment
     with fade
-    
 
     ## SCENE INTRO/DESCRIPTION
     "You open the door to the compartment. As you enter, the train's gentle smell of worn leather and walnut wood fades,
@@ -45,7 +54,7 @@ label Pom:
     ## BEGIN POM DIALOGUE
     show pom talking
     
-    pom "Good morning! How can I help you?"
+    pom_idk "Good morning! How can I help you?"
 
     show pom neutral
     "His dress sense confounds you. A brown, patched up apron rests gently over a muddied collared shirt, which once upon a time must have been quite elegant.
@@ -59,7 +68,7 @@ label Pom:
         "Tickets please!":                                  #1A
             show pom happy
             #jump 1A
-            pom "Here you are, sir."
+            pom_idk "Here you are, sir."
             "As the man hands you his ticket, you notice his hand shaking. Despite his sunny demeanor, he is clearly plagued by something."
             show pom neutral
             menu: 
@@ -85,12 +94,12 @@ label Pom:
         "OH MY GOD THERE IS FILTH EVERYWHERE":              #1C
             show pom sad
             "The man looks around and back at you. He starts to tear up."
-            pom "I’m sorry, I’m such a bloody mess I shouldn’t even have boarded this train..."
+            pom_idk "I’m sorry, I’m such a bloody mess I shouldn’t even have boarded this train..."
 
             menu:
                 "Sorry--I, er, flew a bit off the handle there. Are you doing alright son?":
                     show pom worried
-                    pom "Honestly, not at all. See all these flowers? I was going to take them to a competition in New Key but I’ll never win with these..."
+                    pom_idk "Honestly, not at all. See all these flowers? I was going to take them to a competition in New Key but I’ll never win with these..."
                     menu:
                         "How come?":
                             jump pom_JOIN1
@@ -102,9 +111,9 @@ label Pom:
 
     label pom_JOIN1:
         show pom worried
-        pom "I mean, look at them! I forgot the daisies at home, nobody’s going to think forgetmenots are interesting, and worst of all, my roses aren’t even red!"
+        pom_idk "I mean, look at them! I forgot the daisies at home, nobody’s going to think forgetmenots are interesting, and worst of all, my roses aren’t even red!"
         show pom sad
-        pom "A right mess I am, I should have never even boarded this train..."
+        pom_idk "A right mess I am, I should have never even boarded this train..."
 
         "The young man tears up. His face turns red as he turns away from you in shame."
         show pom sad
@@ -116,16 +125,16 @@ label Pom:
                 pom "Red roses, lively lilies, that’s the kind of bouquet you need to win a competition! Not my pale roses and little specks of blue."
                 jump pom_JOIN2
 
-            "*Lay your arm around his shoulder* I’m sure we can figure something out, no?":
+            "{i}Lay your arm around his shoulder {/i} I’m sure we can figure something out, no?":
                 show pom talking
-                pom "Trust me, sir, I’ve tried. A bike almost hit me on my way to the station and I was only able to grab these before hurrying to the train; and now I’ve lost my prize-winning blooms..."
-                pom "*mumbling* Pom, you’re a right dolt."
+                pom_idk "Trust me, sir, I’ve tried. A bike almost hit me on my way to the station and I was only able to grab these before hurrying to the train; and now I’ve lost my prize-winning blooms..."
+                pom "{i}mumbling {/i} Pom, you’re a right dolt."
                 jump pom_JOIN2
 
             "You’re not wrong lad, those flowers look worse than the bramble on my grandmother’s house...":
                 show pom sad
                 "The young man tears up. His face turns red as he turns away from you and starts to cry quietly."
-                pom "God, I’m such a bloody dimwit. I shouldn’t’ve  gotten on this train..."
+                pom_idk "God, I’m such a bloody dimwit. I shouldn’t’ve  gotten on this train..."
                 $ pomBad = True
                 jump pom_BADEND
 
@@ -135,7 +144,7 @@ label Pom:
         "Besides them stand peach roses, white yarrow flowers and some other pale yellow blossoms you don’t recognise. Each flower seems more beautiful than the last."
         
         menu:
-            "*Put some flowers together into a bouquet* I’m no florist, but these look rather nice together, don’t they?":
+            "{i}Put some flowers together into a bouquet {/i} I’m no florist, but these look rather nice together, don’t they?":
                 show pom worried
                 pom "I mean, they are my favourites. But nobody’s ever won with colours like these, I don’t even know if anyone’s tried! You’d have to be mad to."
                 jump pom_JOIN4
@@ -150,6 +159,7 @@ label Pom:
         pom "Nobody’s ever won with such a bold selection of colours! Red and gold is all the judges seem to ever pick."
         pom "Though, I can’t remember ever seeing anyone else compete with colours like these..."
         jump pom_JOIN4
+    
     label pom_JOIN4:
         show pom neutral
         menu:
@@ -161,6 +171,7 @@ label Pom:
 
             "If I were you, I’d much rather compete and lose with flowers I love rather than suck up to some old geezer with bad taste.":
                 jump pom_JOIN5
+    
     label pom_JOIN5: #POM GOOD ENDING
         show pom happy
         "Light seems to come back into the young gardener's eyes as inspiration takes hold."
@@ -169,17 +180,174 @@ label Pom:
 
         "The smell of sweet peach roses and hopeful hyacinths follows you into the hallway as you close the sliding door behind you."
         "A smile hushes across your lips as you imagine Pom's beautiful flowers stunning all of New Key."
-        "POM GOOD ENDING YIPPEE!!"
         $ grandScore += 1
 
     label pom_BADEND:
         if pomBad:
             scene bg boarding
-            play sound "audio/sfx_talking.mp3" volume 0.2
+            # play sound "audio/sfx_talking.mp3" volume 0.2
             "The train comes to a slow stop at Rosegarden Station."
             "With his head hung low, the young man exits the train. The smell of roses fades, returning you to your world of leather and wood."
             "POM BAD ENDING :("
-            $ grandScore -= 1
 
+##  GREGOR CHARACTER ARC
+label Wizard:
+    label WizardIntro:
+        scene bg compartment
+        with fade
+
+        ## SCENE INTRO/DESCRIPTION
+        "As you approach the door of the next passenger’s, a loud rumble, then a loud curse, then...silence."
+        "Disquieted by the sudden absence, you carefully approach the door."
+
+        "Unknown" "{b}EUREKA!{/b}"
+        play sound "audio/sfx_explosion.mp3" volume 0.5
+        "You flinch. Not at the sudden yell, but the explosion that follows immediately after."
+
+        show wiz shadowed
+        with moveinright
+
+        "Before you know what’s going on, the door comes to greet before you get a chance to, smashing both into you and the wall behind you. With a slight cough, you throw the door aside and get back on your feet."
+        "Through the mist, you begin to recognise a shape: a tall, imposing figure walks towards you as you adjust your hat. For a moment, a cold shiver runs down your spine."
+
+        "Unknown" "{b}WHO ARE YOU TO DISTURB MY MACHINATIONS?!{/b}"
+
+        "As the dust settles, you realise that your fear might have been in vain."
+        show wizard neutral
+        "The figure standing before you is a small, bearded man cloaked in a dark blue cape."
+        "The imposing height you feared but a second ago seems to come entirely from his star-spangled hat."
+
+    menu:       #MAJOR CHOICE 1
+        "{i}Intense coughing {/i} Tickets please!":
+            wiz_idk "Ticket, yeeees, tickets. That is all they ask for, all they care for, but me, I have greater plans...machinations, even!"
+            wiz_idk "Machinations a simple mind like yours could never comprehend!"
+            menu: #Sub-choice 1a
+                "Ahem. Tickets. Please.":
+                    "The man looks at you with eyes filled to the brim with insanity."
+                    "Without breaking eye-contact, he slowly reaches into his sleeve and pulls out a ticket."
+                    "As you grab it, you realise how wet it is. The name, clearly written with a quill or some other old-fashioned implement, has become illegible."
+
+                    menu:
+                        "Thank you. Do you mind telling me your name, sir?":
+                            jump wiz_JOIN2
+                "...What?":
+                    jump wiz_JOIN1
+
+        "By Jove! What on earth is happening in there? What happened to the window?":
+            jump wiz_JOIN1
+
+        "{b}MY DOOR! MY WINDOW! YOU WILL PAY FOR THIS YOU TRAFFIC-CONE SHAPED DIMWIT!{/b}":
+            show wizard mad
+            wiz_idk "OH, YELLING, ARE WE?"
+            wiz "I, MAGMODEUS THE STAUNCH, GREATEST WIZARD IN ALL THE REALMS AND OF ALL TIME, WILL NOT SUFFER SUCH DISRESPECT AT THE HANDS OF A SIMPLETON!"
+            menu:   #Sub-choice 1c
+                "Good Heavens, calm yourself! Just...explain to me what happened and we can keep yelling after!":
+                    jump wiz_JOIN1
+                "AND I WILL NOT HAVE A CRUSTY, HOMICIDAL FINGER WIGGLER ON MY TRAIN! OUT!":
+                    $ wizBad = True
+                    jump wiz_BADEND
+            
+    label wiz_JOIN1:
+        show wizard neutral
+        wiz "Experiments, my dear boy! I, Magmodeus the Staunch, Greatest Wizard of all the Realms, and of all time am conducting experiments of utmost importance! "
+        wiz "I am to present my findings to the Wizarding Council of New Key this week, and I have yet to complete my writings!"
+        wiz "Alack, my newest apprentice and keeper of the minutes has, mysteriously, gone missing! I could swear he was here a moment ago..."
     
+        "The Wizard turns around, observing the window with an almost bemused expression."
+        
+        wiz "Ah...that explains it. Not the first time it has happened I suppose."
+        
+        "He turns back to you, staring into what you feel must be either the deepest corners of your soul, or absolutely nothing at all."
+        "Finally, he extends his hand to you. His bony, pale, ice-cold hand."
+        jump wiz_JOIN2
+
+    label wiz_JOIN2:
+        show wizard happy
+        wiz "Magmodeus the Staunch, Greatest Wizard of all the Realms, and of all time, if I may say so myself!"
+        wiz "You are? Well, it hardly matters."
+        wiz "Say, dear boy, are you in search of work? I need a young, virile fellow like yourself to aid me in my research!"
+
+    menu:   #MAJOR CHOICE 2
+        "{i}Shake his hand {/i} A...pleasure. I’d be honoured to work with a true professional such as yourself.":
+            "Grasping his hand makes your stomach turn."
+            "You feel cold and hot simultaneously, as if you’re suddenly struck with the heaviest of fevers."
+            "Not a good look for a job interview."
+
+            wiz "Likewise, dear boy! I have been in need of one ever since my dear...what was it? Daniel? Dan? D-Dog?"
+            wiz "Can’t have been a very good one since he flew out the window like a half-empty bag of potatoes!"
+            show wizard happy
+            wiz "Here, sign this and we’ll get to work, dear boy!"
+
+            "A crusty, brown piece of parchment reading {i}“CONTRACT FOR {s}SHERLOCK{/s} {s}BRAM{/s} {s}AMOS{/s} NEW APPRENTICE” appears in his hand."
+            "Before you know it, a pen appears in your hand, moving so independently you can barely stop yourself from signing the contract."
+            "...Maybe this was a bad idea."
+
+            wiz "Spectacular! Now, I will need some time to set up the experiment again; hopefully you perform better than whatever-his-name was."
+            wiz "But for now, go! Tend to your obligations and I...shall call upon you when I most need you."
+
+            "The most bizarre grin you’ve ever had the displeasure of witnessing spreads across your new boss’s face as you shake his hand again."
+            "As soon as he lets go, Magmodeus wiggles his fingers and you are pushed violently back out into the hall."
+            
+            scene bg hallway
+            with hpunch
+            "When you turn around, the door is back where it was, and muffled voice bids you adieu."
+
+            wiz "Ta, dear boy! I shall see you soon!"
+            "As you face the hall, your new employer's cackle fills your ears, and your stomach turns again."
+            "You dread your stay in New Key City."
+            $ grandScore += 1
+            
+        "“Not the first time”?":
+            wiz "Yes, yes, I think I might have lost three this week!"
+            wiz "None of them will see the big city now, but such is the price of progress!"
+            menu:   #sub-choice 2B
+                "Have you ever considered that your work might be more successful if you didn’t need to...find new apprentices each day?":
+                    "A glimmer of something you can only describe as “morbid inspiration” filles Magmodeus’s eyes."
+                    show wizard happy
+                    "You see decrepit yellow teeth, standing in line like rotting ancient tomb stones, as a smile creeps across the Wizard’s face and widens into a disgusting cackle."
+                    
+                    wiz "Absolutely magnificent! If I simply stockpile apprentices I won’t have to take in all these simple men!"
+                    wiz "Simply spectacular, dear boy. I am {i}simply{/i} spectacular."
+                    wiz "And as it just so happens, I am {i}surrounded{/i} by potent individuals to bag!"
+                    menu:
+                        "Oh no.":
+                            "Magmodeus does not hear you. He pushes past you, leaving a dark, green stain on your trousers with his hand."
+                            "A vile smell rises into your nose, making you wonder if its the odour or your conscience making your stomach turn as you watch the Wizard walk towards the next cart..."
+                            $ grandScore += 1
+
+                "Am I going to die?":
+                    show wizard neutral
+                    wiz "What are you, a coward? Or worse...a rat?"
+                    show wizard mad
+                    wiz "{b}A FILTHY RAT SENT BY THE COUNCIL TO SPY ON MY MACHINATIONS?{/b}"
+                    $ wizBadPre = True;
+                    jump wiz_pre_BADEND
+                "You’re insane! I won’t let you keep killing people for your pointless experiments!":
+                    $ wizBadPre = True;
+                    jump wiz_pre_BADEND
+
+        "You’re insane! Get the hell off of my train before I call the mage-catcher!":
+            $ wizBadPre = True;
+            jump wiz_pre_BADEND
+
+    label wiz_pre_BADEND:
+        if wizBadPre:
+            show wizard mad
+            "Magmodeus stares at you with white-hot rage glazing over his eyes."
+            "Suddenly, he raises his arms as if to claw at you and hisses loudly."
+            wiz "Go ahead and try it, cretin! Nothing and no-one catches Magmodeus the Staunch, Greatest Wizad of All the Realms! I shall find more apprentices elsewhere and you shan’t stop me!"
+            $ wizBad = True
+            jump wiz_BADEND
+    label wiz_BADEND:
+            if wizBad:
+                scene bg compartment
+                with hpunch
+                play sound "audio/sfx_explosion.mp3" volume 1
+                "Magmodeus turns towards the window. Before you realise what is happening, another explosion catapults you into the hall. There is no trace of the Wizard."
+                
+                "There are, however, traces of his having been here. Glass lies upon the wooden floor and black soot stains cover every surface of the compartment."
+                "Through the shattered window, somehow an even sadder sight than before, you hear a faint, yet mad cackle."
+                if knowApprentice:
+                    "You shiver when you think of how many apprentices you sacrificed with your decisions here today."
+
 return
