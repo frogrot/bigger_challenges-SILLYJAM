@@ -21,18 +21,18 @@ define samBad = False
 define samPreBad = False
 
 label start:    #paper intro!
-    # pause 1.0
+    pause 1.2
     play sound "audio/sfx_paper.mp3" volume 0.5
-    show bg letter1 with dissolve
+    scene bg letter1 with dissolve
     $ renpy.pause()
     play sound "audio/sfx_paper.mp3" volume 0.5
-    show bg letter2 with dissolve
+    scene bg letter2 with dissolve
     $ renpy.pause()
     play sound "audio/sfx_paper.mp3" volume 0.5
-    show bg letter3 with dissolve
+    scene bg letter3 with dissolve
     $ renpy.pause()
     play sound "audio/sfx_paper.mp3" volume 0.5
-    show bg letter4 with dissolve
+    scene bg letter4 with dissolve
     $ renpy.pause()
     play sound "audio/sfx_paper.mp3" volume 1
     
@@ -41,6 +41,143 @@ label start:    #paper intro!
     scene bg titlecard 
     with slideleft
     $ renpy.pause()
+
+## SAMSA CHARACTER ARC
+label Samsa:
+    label SamIntro:
+        scene bg hallway
+        with fade
+
+        ## SCENE INTRO/DESCRIPTION
+        "The compartment before you unnerves you..."
+        "Not a single movement, not a single sound comes from within."
+        "Peering through the tinted windows, however, you can clearly see the silhouette of a passenger within."
+
+        menu:
+            "{i}Knock politely {/i} May I come in?":
+                "Unknown" "Hm? What? Oh yeah, come in."
+                play sound "audio/sfx_doorslide.mp3" volume 1
+                scene bg compartment with fade
+            "Open the door":
+                play sound "audio/sfx_doorslide.mp3" volume 1
+                scene bg compartment with fade
+        
+        "As you open the door, a cold, primal fear grips your entire body."
+        show samsa neutral
+        with moveinright
+        "Sitting in front of you on the plush upholstery sits a grotesque, human-sized bug."
+        "A tie hangs loosely around his neck, emphasising his long, creaky carapace covered by a sports coat with only two sleeves."
+        "Were he human, you’d call him dapper. But he’s not. He’s a bug."
+
+        menu:   #   MAJOR CHOICE 1
+            "I- er- wha- ...Tickets please!":
+                sam_idk "Hm? Oh yeah, tickets. You need those. Here you go."
+                "You hear hard chitin plates rub against one another as he clumsily pulls a small piece of paper from his jacket pocket"
+                "As he passes you the slip, you realise that his sharp claws have mangled it entirely."
+
+                menu:
+                    "Thanks, but...this is completely illegible.":
+                        sam_idk "Right...the claws. Those’ll be fun to work spreadsheets with..."
+                        menu:
+                            "I feel like you should take a day off to work out this whole...bug situation.":
+                                jump sam_JOIN2
+                    "You, er, have claws. That’s not normal.":
+                        jump sam_JOIN1
+            "Great Scott, what the hell are you?!":
+                sam_idk "An accountant. Kind of a weird question to ask a stranger."
+                "The bug’s mandibles click so slowly it feels like a sigh."
+                menu:
+                    "That’s not what I mean! Do you not know that you’re a giant bug?":
+                        jump sam_JOIN1
+            "{i}SCREAM{/i}":
+                show samsa dejected
+                sam_idk "Oh no...I’m sorry for startling you...you probably thought that there wasn’t anyone in here..."
+                menu:
+                    "No, no, don’t apologise. It’s just...you’re a giant bug.":
+                        jump sam_JOIN1
+                    "Giant b-bug!! Pest control in here now!!":
+                        $samBad = True;
+                        play sound "audio/sfx_doorslide.mp3" volume 1
+                        scene bg compartment with hpunch
+                        "Before the beast can respond, you slam the door shut. No vile beasts will prey on your valued passengers!"
+                        "Pest control arrives shortly after, and as you walk away, you smell the sickly stench of insecticides filling the compartment before you."
+                        "Your passengers are safe; another job well done!"
+
+    label sam_JOIN1:
+        show samsa dejected
+        sam_idk "Oh right...I forgot. Sorry about that."
+        sam_idk "I woke up like this today but...boss would kill me if I didn’t come in today, so..."
+
+        menu: 
+            "I feel like you should take a day off to work out this whole...bug situation.":
+                jump sam_JOIN2
+            "So you’re just...content with this?":
+                sam_idk "I guess so...Everyone has a job, right? Aren’t you doing yours right now?"
+                menu:
+                    "But you’re a bug! Bugs don’t work in accounting!":
+                        show samsa hopeful
+                        "A brief look of recognition hushes across Gregor’s face, or so you think."
+                        jump sam_JOIN3
+                    "I guess so":
+                        $ samPreBad = True
+                        jump sam_pre_BADEND
+            "Tell me about it. My boss has been busting my balls for years now...":
+                $ samPreBad = True;
+                jump sam_pre_BADEND
+    
+    label sam_JOIN2:
+        "Gregor turns his head to look at you, making every plate in his neck creak. Each one of his thousands of eyes is filled with nothing but raw apathy."
+        
+        sam "I’ve already taken three days off this year, I would get fired if I took any more."
+        show samsa dejected
+        sam "I haven’t even had time to visit family this year..."
+        menu:
+            "That’s horrible! How are you even alive?":
+                sam "Well, you know how it is...Boss makes a dollar, I make a dime, that’s why I’m a bug on company time..."
+                "You expect to detect some hint of cynicism on Gregor’s face, but even through the mandibles and thousands of eyes, you can tell that he isn’t smiling."
+                menu:
+                    "Come on, you deserve better than this. If turning into a half-tonne chitinous beast doesn’t merit some rest, then what does?":
+                        sam "That’s...fair I suppose."
+                        show samsa hopeful
+                        sam "Maybe I’ll go visit my aunt in the city. I haven’t seen her in months, and she was always fond of insects..."
+                        "Excited clicking fills the room as Gregor tells you about things he and his aunt used to get up to when he was younger."
+                        
+                        play sound "audio/sfx_doorslide.mp3" volume 1
+                        "When you leave the compartment, your exoskeletal friend is positively buzzing. You smile as you think of a middle aged woman and her gigantic bug nephew conquering New Key City."
+                        jump sam_GOODEND
+
+                    "Gregor, you’re a bug! Bugs don’t work in accounting!":
+                        jump sam_JOIN3
+
+            "But you’re a bug! Bugs don’t work in accounting!":
+                "A brief look of recognition hushes across Gregor’s face, or so you think."
+                jump sam_JOIN3
+
+    label sam_JOIN3:
+        sam "...It’s true, and I would know. I’ve never even seen a bug in my office before..."
+        menu:
+            "See! Maybe just take one day to sort out the fact that you have more eyes than this train has wheels.":
+                show samsa hopeful
+                "Gregor nods. A slightly more lively clicking escapes his jaws as he begins to discuss things to do in New Key City, even agreeing to meet for dinner tonight."
+                play sound "audio/sfx_doorslide.mp3" volume 1
+                scene bg hallway with fade
+                "When you leave the compartment, your exoskeletal friend is positively buzzing. You smile as you think of all the fun things Gregor will be getting up to today."
+                jump sam_GOODEND
+    label sam_GOODEND:
+        $grandScore += 1
+    label sam_pre_BADEND:
+        if samPreBad:
+            show samsa dejected
+            sam_idk "See? We’re all just doing our jobs."
+            sam_idk "You talk to giant bug accountants, and I work spreadsheets for a living. Nothing that interesting about it..."
+            
+            play sound "audio/sfx_doorslide.mp3" volume 1
+            scene bg hallway with fade
+    label sam_BADEND:
+        if samPreBad:
+        "nothing happens"
+            
+     
 
 ##  POM CHARACTER ARC
 label Pom:
@@ -196,16 +333,15 @@ label Pom:
 
     label pom_BADEND:
         if pomBad:
-            scene bg hallway
-            # play sound "audio/sfx_talking.mp3" volume 0.2
+            scene bg hallway with fade
+            play sound "audio/sfx_doorslide.mp3" volume 1
             "The train comes to a slow stop at Rosegarden Station."
             "With his head hung low, the young man exits the train. The smell of roses fades, returning you to your world of leather and wood."
 
 ##  WIZARD CHARACTER ARC
 label Wizard:
     label WizardIntro:
-        scene bg compartment
-        with fade
+        scene bg hallway with fade
 
         ## SCENE INTRO/DESCRIPTION
         "As you approach the door of the next passenger’s, a loud rumble, then a loud curse, then...silence."
@@ -213,10 +349,12 @@ label Wizard:
 
         "Unknown" "{b}EUREKA!{/b}"
         play sound "audio/sfx_explosion.mp3" volume 0.5
+        show bg hallway with vpunch
         "You flinch. Not at the sudden yell, but the explosion that follows immediately after."
 
         "Before you know what’s going on, the door comes to greet before you get a chance to, smashing both into you and the wall behind you."
         "With a slight cough, you throw the door aside and get back on your feet."
+        show bg compartment with hpunch
         show wizard shadowed
         with dissolve
         "Through the mist, you begin to recognise a shape: a tall, imposing figure walks towards you as you adjust your hat. For a moment, a cold shiver runs down your spine."
@@ -318,7 +456,9 @@ label Wizard:
             $ grandScore += 1
             
         "“Not the first time”?":
+            
             wiz "Yes, yes, I think I might have lost three this week!"
+            show wizard thinking
             wiz "None of them will see the big city now, but such is the price of progress!"
             menu:   #sub-choice 2B
                 "Have you ever considered that your work might be more successful if you didn’t need to...find new apprentices each day?":
@@ -333,6 +473,9 @@ label Wizard:
                     menu:
                         "Oh no.":
                             "Magmodeus does not hear you. He pushes past you, leaving a dark, green stain on your trousers with his hand."
+                            play sound "audio/sfx_doorslide.mp3" volume 1
+                            scene bg hallway
+                            with fade
                             "A vile smell rises into your nose, making you wonder if its the odour or your conscience making your stomach turn as you watch the Wizard walk towards the next cart..."
                             $ grandScore += 1
 
@@ -361,146 +504,16 @@ label Wizard:
             jump wiz_BADEND
     label wiz_BADEND:
             if wizBad:
-                
-                scene bg compartment
-                with hpunch
                 play sound "audio/sfx_explosion.mp3" volume 1
-                "Magmodeus turns towards the window. Before you realise what is happening, another explosion catapults you into the hall. There is no trace of the Wizard."
+                scene bg hallway
+                with hpunch
                 
+                "Magmodeus turns towards the window. Before you realise what is happening, another explosion catapults you into the hall. There is no trace of the Wizard."
                 "There are, however, traces of his having been here. Glass lies upon the wooden floor and black soot stains cover every surface of the compartment."
                 "Through the shattered window, somehow an even sadder sight than before, you hear a faint, yet mad cackle."
                 if knowApprentice:
                     "You shiver when you think of how many apprentices you sacrificed with your decisions here today."
 
-## SAMSA CHARACTER ARC
-label Samsa:
-    label SamIntro:
-        scene bg hallway
-        with fade
-
-        ## SCENE INTRO/DESCRIPTION
-        "The compartment before you unnerves you..."
-        "Not a single movement, not a single sound comes from within."
-        "Peering through the tinted windows, however, you can clearly see the silhouette of a passenger within."
-
-        menu:
-            "{i}Knock politely {/i} May I come in?":
-                "Unknown" "Hm? What? Oh yeah, come in."
-                play sound "audio/sfx_doorslide.mp3" volume 1
-                scene bg compartment with fade
-            "Open the door":
-                play sound "audio/sfx_doorslide.mp3" volume 1
-                scene bg compartment with fade
-        
-        "As you open the door, a cold, primal fear grips your entire body."
-        show samsa neutral
-        with moveinright
-        "Sitting in front of you on the plush upholstery sits a grotesque, human-sized bug."
-        "A tie hangs loosely around his neck, emphasising his long, creaky carapace covered by a sports coat with only two sleeves."
-        "Were he human, you’d call him dapper. But he’s not. He’s a bug."
-
-        menu:   #   MAJOR CHOICE 1
-            "I- er- wha- ...Tickets please!":
-                sam_idk "Hm? Oh yeah, tickets. You need those. Here you go."
-                "You hear hard chitin plates rub against one another as he clumsily pulls a small piece of paper from his jacket pocket"
-                "As he passes you the slip, you realise that his sharp claws have mangled it entirely."
-
-                menu:
-                    "Thanks, but...this is completely illegible.":
-                        sam_idk "Right...the claws. Those’ll be fun to work spreadsheets with..."
-                        menu:
-                            "I feel like you should take a day off to work out this whole...bug situation.":
-                                jump sam_JOIN2
-                    "You, er, have claws. That’s not normal.":
-                        jump sam_JOIN1
-            "Great Scott, what the hell are you?!":
-                sam_idk "An accountant. Kind of a weird question to ask a stranger."
-                "The bug’s mandibles click so slowly it feels like a sigh."
-                menu:
-                    "That’s not what I mean! Do you not know that you’re a giant bug?":
-                        jump sam_JOIN1
-            "{i}SCREAM{/i}":
-                show samsa dejected
-                sam_idk "Oh no...I’m sorry for startling you...you probably thought that there wasn’t anyone in here..."
-                menu:
-                    "No, no, don’t apologise. It’s just...you’re a giant bug.":
-                        jump sam_JOIN1
-                    "Giant b-bug!! Pest control in here now!!":
-                        $samBad = True;
-                        "Before the beast can respond, you slam the door shut. No vile beasts will prey on your valued passengers!"
-                        "Pest control arrives shortly after, and as you walk away, you smell the sickly stench of insecticides filling the compartment before you."
-                        "Your passengers are safe; another job well done!"
-                        jump sam_BADEND
-
-    label sam_JOIN1:
-        show samsa dejected
-        sam_idk "Oh right...I forgot. Sorry about that."
-        sam_idk "I woke up like this today but...boss would kill me if I didn’t come in today, so..."
-
-        menu: 
-            "I feel like you should take a day off to work out this whole...bug situation.":
-                jump sam_JOIN2
-            "So you’re just...content with this?":
-                sam_idk "I guess so...Everyone has a job, right? Aren’t you doing yours right now?"
-                menu:
-                    "But you’re a bug! Bugs don’t work in accounting!":
-                        show samsa hopeful
-                        "A brief look of recognition hushes across Gregor’s face, or so you think."
-                        jump sam_JOIN3
-                    "I guess so":
-                        $ samPreBad = True
-                        jump sam_pre_BADEND
-            "Tell me about it. My boss has been busting my balls for years now...":
-                $ samPreBad = True;
-                jump sam_pre_BADEND
-    
-    label sam_JOIN2:
-        "Gregor turns his head to look at you, making every plate in his neck creak. Each one of his thousands of eyes is filled with nothing but raw apathy."
-        
-        sam "I’ve already taken three days off this year, I would get fired if I took any more."
-        show samsa dejected
-        sam "I haven’t even had time to visit family this year..."
-        menu:
-            "That’s horrible! How are you even alive?":
-                sam "Well, you know how it is...Boss makes a dollar, I make a dime, that’s why I’m a bug on company time..."
-                "You expect to detect some hint of cynicism on Gregor’s face, but even through the mandibles and thousands of eyes, you can tell that he isn’t smiling."
-                menu:
-                    "Come on, you deserve better than this. If turning into a half-tonne chitinous beast doesn’t merit some rest, then what does?":
-                        sam "That’s...fair I suppose."
-                        show samsa hopeful
-                        sam "Maybe I’ll go visit my aunt in the city. I haven’t seen her in months, and she was always fond of insects..."
-                        "Excited clicking fills the room as Gregor tells you about things he and his aunt used to get up to when he was younger."
-                        
-                        play sound "audio/sfx_doorslide.mp3" volume 1
-                        "When you leave the compartment, your exoskeletal friend is positively buzzing. You smile as you think of a middle aged woman and her gigantic bug nephew conquering New Key City."
-                        jump sam_GOODEND
-
-                    "Gregor, you’re a bug! Bugs don’t work in accounting!":
-                        jump sam_JOIN3
-
-            "But you’re a bug! Bugs don’t work in accounting!":
-                "A brief look of recognition hushes across Gregor’s face, or so you think."
-                jump sam_JOIN3
-
-    label sam_JOIN3:
-        sam "...It’s true, and I would know. I’ve never even seen a bug in my office before..."
-        menu:
-            "See! Maybe just take one day to sort out the fact that you have more eyes than this train has wheels.":
-                show samsa hopeful
-                "Gregor nods. A slightly more lively clicking escapes his jaws as he begins to discuss things to do in New Key City, even agreeing to meet for dinner tonight."
-                play sound "audio/sfx_doorslide.mp3" volume 1
-                "When you leave the compartment, your exoskeletal friend is positively buzzing. You smile as you think of all the fun things Gregor will be getting up to today."
-                jump sam_GOODEND
-    label sam_GOODEND:
-        $grandScore += 1
-    label sam_pre_BADEND:
-        if samPreBad:
-            show samsa dejected
-            sam_idk "See? We’re all just doing our jobs."
-            sam_idk "You talk to giant bug accountants, and I work spreadsheets for a living. Nothing that interesting about it..."
-    label sam_BADEND:
-        # if samBad:
-        #     $grandScore -
-        
+   
 
 return
