@@ -25,6 +25,7 @@ define samBad = False
 define jonesBad = False
 
 label start:    #paper intro!
+    
     pause 1.2
     play sound "audio/sfx_paper.mp3" volume 0.5
     scene bg letter1 with dissolve
@@ -112,6 +113,7 @@ label Samsa:
                     "No, no, don’t apologise. It’s just...you’re a giant bug.":
                         jump sam_JOIN1
                     "Giant b-bug!! Pest control in here now!!":
+                        $grandScore -= 1
                         play sound "audio/sfx_doorslide.mp3" volume 1
                         scene bg hallway with hpunch
                         "Before the beast can respond, you slam the door shut. No vile beasts will prey on your valued passengers!"
@@ -199,6 +201,7 @@ label Samsa:
 
     label sam_BADEND:
         if samBad:
+            $grandScore -= 1
             show samsa dejected
             sam "See? We’re all just doing our jobs."
             sam "You talk to giant bug accountants, and I work spreadsheets for a living. Nothing that interesting about it..."
@@ -211,8 +214,6 @@ label Samsa:
    
 ##  POM CHARACTER ARC
 label Pom:
-    if not samBad:
-        $grandScore += 1
     ## SCENE INTRO/DESCRIPTION
     play sound "<from 0 to 3>audio/sfx_footsteps.mp3" volume 1
     "Following the pleasant scent, you rap your knuckles against the next door and slide it open."
@@ -364,6 +365,7 @@ label Pom:
 
     label pom_BADEND:
         if pomBad:
+            $grandScore -= 1
             scene bg hallway with fade
             play sound "audio/sfx_doorslide.mp3" volume 1
             "The train comes to a slow stop at Rosegarden Station."
@@ -377,8 +379,6 @@ label Pom2Wiz:
 
 ##  WIZARD CHARACTER ARC
 label Wizard:
-    if not pomBad:
-        $grandScore += 1
     label WizardIntro:
         scene bg hallway
         ## SCENE INTRO/DESCRIPTION
@@ -437,6 +437,7 @@ label Wizard:
                     jump wiz_JOIN1
                 "AND I WILL NOT HAVE A CRUSTY, HOMICIDAL FINGER WIGGLER ON MY TRAIN! OUT!":
                     $ wizBad = True
+                    $ grandScore -= 1
                     jump wiz_BADEND
             
     label wiz_JOIN1:
@@ -566,8 +567,7 @@ label Wiz2Jones:
     "Hopefully your next passenger is a little less…eccentric."
 #   ICICYLE JONES ARC
 label Jones:
-    if not wizBad:
-        $grandScore += 1
+
     scene bg hallway
     play sound "<from 0 to 5>audio/sfx_footsteps.mp3" volume .8
     ## SCENE INTRO/DESCRIPTION
@@ -734,6 +734,7 @@ label Jones:
 
     label jones_BADEND:
         if jonesBad:
+            $grandScore -= 1
             "The train rumbles."
             play sound "<from 0 to 1.5>sfx_glassbreaking.mp3" volume 1
             "Suddenly, a gigantic, white-furred hand bursts through the window, grabbing Icicle Jones. You lock eyes with him as he's suddenly pulled back."
@@ -747,16 +748,16 @@ label Jones:
             play sound "audio/sfx_doorslide.mp3" volume 1
             play sound "<from 6 to 13>audio/sfx_footsteps.mp3" volume .8
             "As you step back into the hallway, you nervously glance toward the windows. Maybe you aren’t safe from the yeti either..."
+            
 
 label conclusion:
-    wiz "[grandScore]"
-    if grandScore < 1:
+    if grandScore == -3:
         scene bg bad with fade
         $ renpy.pause()
         scene bg bad2 with fade
         $ renpy.pause()
 
-    elif grandScore > 3:
+    elif grandScore == 0:
         scene bg good with fade
         $ renpy.pause()
         scene bg good2 with fade
