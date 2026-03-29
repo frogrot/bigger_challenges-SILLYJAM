@@ -15,7 +15,7 @@ define jones = Character("Icycle Jones", color = "#86634d")
 define grandScore = 0 
 #   Pom
 define pomBad = False
-#   Wiz
+#   WizR
 define knowApprentice = False
 define wizBad = False
 define wizBadPre = False
@@ -212,7 +212,7 @@ label Samsa:
 ##  POM CHARACTER ARC
 label Pom:
     if not samBad:
-    $grandScore += 1
+        $grandScore += 1
     ## SCENE INTRO/DESCRIPTION
     play sound "<from 0 to 3>audio/sfx_footsteps.mp3" volume 1
     "Following the pleasant scent, you rap your knuckles against the next door and slide it open."
@@ -378,7 +378,7 @@ label Pom2Wiz:
 ##  WIZARD CHARACTER ARC
 label Wizard:
     if not pomBad:
-    $grandScore += 1
+        $grandScore += 1
     label WizardIntro:
         scene bg hallway
         ## SCENE INTRO/DESCRIPTION
@@ -567,7 +567,7 @@ label Wiz2Jones:
 #   ICICYLE JONES ARC
 label Jones:
     if not wizBad:
-    $grandScore += 1
+        $grandScore += 1
     scene bg hallway
     play sound "<from 0 to 5>audio/sfx_footsteps.mp3" volume .8
     ## SCENE INTRO/DESCRIPTION
@@ -627,7 +627,7 @@ label Jones:
                     jones "Too quick for a yeti"
                     jump jones_JOIN1
         "T-t-tickets please?":
-            show jones wideyed
+            show jones wideeyed
             jones "Even if I knew what that was, Icicle Jones wouldn’t’ve given ye any “tick-its”. Now tell me, where’s that gosh darn yeti?"
             menu:
                 "Talisman Railroad Co. has a strict anti-monster code! There are no yetis anywhere near this train!":
@@ -667,13 +667,15 @@ label Jones:
         "You wonder why he chooses to wear these horrid scraps instead."
 
         jones "I ain’t never been to no city before, but I heard them city folk live comfy-like."
+        show jones happy
         jones "Maybe them got warmer caves there!"
         menu:   #MAJOR CHOICE 2
             "You know, you could try to sell your pelts in town, that way you can get yourself a little money to start over!":
+                show jones wideeyed
                 "Icicle Jones locks eyes with you."
                 "Slowly, his faces inches closer to yours until his big bushy beard is brushing against your chest."
                 "You try your best to ignore the...earthy scent that now invades your personal space."
-
+                show jones neutral
                 jones "Yer sayin’ Icicle Jones could be...a businessman? Like them fancy types with a suit?"
                 menu:
                     "Absolutely! You’ve got the charm, wit, and stunning good looks!":
@@ -704,6 +706,7 @@ label Jones:
                         jump conclusion
 
             "How does one even begin to get chased by a yeti?":
+                show jones neutral
                 jones "Well...y’know. Icicle Jones is a handsome feller, and them yetis got pretty wives..."
                 show jones happy
                 "He grins through his thick beard. Then, he pulls you in close."
@@ -715,7 +718,7 @@ label Jones:
                     "What’s your plan then?":
                         show jones neutral
                         jones "Icicle Jones hears that them city folks got bigger guns than me...and if’n I want my mountain back...well."
-                        show jones wideyed
+                        show jones wideeyed
                         jones "Icicle Jones shan’t say...that is Icicle Jones’s business, and Icicle Jones’s business alone! Now scram!"
 
                         "Finally, the Mountain Man lets go of your head and violently pushes you out the door."
@@ -725,6 +728,7 @@ label Jones:
                         "As you begin your walk to the next compartment, you realise that the yeti might be in more danger than Icicle Jones ever was."
 
             "{i}Chuckle {/i} You’re not wrong, I’ve never had to worry about yetis chasing after me in my life.":
+                
                 jones "Hoo-wee, that does sound quite nice. Icicle Jones is excited!"
                 jump jones_BADEND
 
@@ -745,10 +749,23 @@ label Jones:
             "As you step back into the hallway, you nervously glance toward the windows. Maybe you aren’t safe from the yeti either..."
 
 label conclusion:
-    if grandScore == 0:
-        "F!!"
-    elif grandScore == 4:
-        "A+!!"
+    wiz "[grandScore]"
+    if grandScore < 1:
+        scene bg bad with fade
+        $ renpy.pause()
+        scene bg bad2 with fade
+        $ renpy.pause()
+
+    elif grandScore > 3:
+        scene bg good with fade
+        $ renpy.pause()
+        scene bg good2 with fade
+        $ renpy.pause()
+
     else:
-        "C"
+        scene bg mid with fade
+        $ renpy.pause()
+        scene bg mid2 with fade
+        $ renpy.pause()
+
 return
