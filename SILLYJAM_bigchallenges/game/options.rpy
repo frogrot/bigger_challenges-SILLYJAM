@@ -31,7 +31,9 @@ define config.version = "1.0"
 
 define gui.about = _p("""
 This is Team Bigger Challenges (Basil + Trin)'s submission for the Jerbob SILLY JAM!! 
-This is a simple visual novel based on the theme \"Go to Town\".
+This is a simple visual novel based on the theme \"Go to Town\". 
+
+(We've made the town a city in this case, but we think it works anyway.)
 
 This is Basil's first ever game jam, and Trin's first foray into programming for games, but we hope you enjoy our creation! :)
 """)

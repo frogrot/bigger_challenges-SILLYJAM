@@ -5,8 +5,11 @@ define pom = Character("Pom", color="#0e5d34")
 define wiz_idk = Character("Rancid Small Man")
 define wiz = Character("Magmodeus the Staunch, Greatest Wizard of All the Realms",color="#13489c")
 
-define sam_idk = Character("Bug Man???")
+define sam_idk = Character("Looming Insect")
 define sam = Character("Gregor Samsa", color="#305f54")
+
+define jones_idk = Character("Violent Man")
+define jones = Character("Icycle Jones", color = "#86634d")
 
 ## VARIABLES
 define grandScore = 0 
@@ -18,7 +21,8 @@ define wizBad = False
 define wizBadPre = False
 #   Samsa
 define samBad = False
-define samPreBad = False
+# Jones
+define jonesBad = False
 
 label start:    #paper intro!
     pause 1.2
@@ -36,18 +40,25 @@ label start:    #paper intro!
     $ renpy.pause()
     play sound "audio/sfx_paper.mp3" volume 1
     
-    play sound "audio/sfx_trainwhistle.mp3" fadein 0.5 volume 0.5
     play music "audio/bgm_train.mp3" fadein 1 volume 0.1
     scene bg titlecard 
     with slideleft
     $ renpy.pause()
 
+label preSamsa:
+    "It’s your first day on the job!"
+    play sound "<from 3 to 10>audio/sfx_footsteps.mp3" volume .8
+    "Who knows what exciting things might happen; the people you’ll meet, the landscapes you’ll travel through, all of it is very intriguing."
+    play sound "audio/sfx_trainwhistle.mp3" fadein 0.5 volume 0.5
+    "You hop onto the first cart with zest, looking forward to your day. The train whistles sounds, and off you go!" 
+    play sound "audio/bgm_train.mp3" fadein 1 volume 0.2
+
 ## SAMSA CHARACTER ARC
 label Samsa:
     label SamIntro:
-        scene bg hallway
-        with fade
-
+        scene bg hallway with fade
+        play sound "<from 0 to 10>audio/sfx_footsteps.mp3" volume .8
+        
         ## SCENE INTRO/DESCRIPTION
         "The compartment before you unnerves you..."
         "Not a single movement, not a single sound comes from within."
@@ -55,7 +66,9 @@ label Samsa:
 
         menu:
             "{i}Knock politely {/i} May I come in?":
+                play sound "<from 0 to 3>audio/sfx_footsteps.mp3" volume .8
                 "Unknown" "Hm? What? Oh yeah, come in."
+                
                 play sound "audio/sfx_doorslide.mp3" volume 1
                 scene bg compartment with fade
             "Open the door":
@@ -77,7 +90,9 @@ label Samsa:
 
                 menu:
                     "Thanks, but...this is completely illegible.":
-                        sam_idk "Right...the claws. Those’ll be fun to work spreadsheets with..."
+                        show samsa dejected
+                        sam "Right...the claws. Gregor with the bug claws. That’s me."
+                        sam "Those’ll be fun to work spreadsheets with..."
                         menu:
                             "I feel like you should take a day off to work out this whole...bug situation.":
                                 jump sam_JOIN2
@@ -85,6 +100,7 @@ label Samsa:
                         jump sam_JOIN1
             "Great Scott, what the hell are you?!":
                 sam_idk "An accountant. Kind of a weird question to ask a stranger."
+                show samsa dejected
                 "The bug’s mandibles click so slowly it feels like a sigh."
                 menu:
                     "That’s not what I mean! Do you not know that you’re a giant bug?":
@@ -96,38 +112,45 @@ label Samsa:
                     "No, no, don’t apologise. It’s just...you’re a giant bug.":
                         jump sam_JOIN1
                     "Giant b-bug!! Pest control in here now!!":
-                        $samBad = True;
                         play sound "audio/sfx_doorslide.mp3" volume 1
-                        scene bg compartment with hpunch
+                        scene bg hallway with hpunch
                         "Before the beast can respond, you slam the door shut. No vile beasts will prey on your valued passengers!"
+                        play sound "<from 2>audio/sfx_footsteps.mp3" volume .8
                         "Pest control arrives shortly after, and as you walk away, you smell the sickly stench of insecticides filling the compartment before you."
                         "Your passengers are safe; another job well done!"
+
+                        "Composing yourself that moment of heroism, you perk up as you notice something perculiar."
+                        "You take a deep breath in...Flowers? Not a common scent on a train!"
+                        "You approach the next compartment, looking for the source."
+                        jump Pom
 
     label sam_JOIN1:
         show samsa dejected
         sam_idk "Oh right...I forgot. Sorry about that."
-        sam_idk "I woke up like this today but...boss would kill me if I didn’t come in today, so..."
+        
+        sam_idk " I woke up like this today but...boss would kill me if I didn’t come in today."
+        sam "“Gregor, you’re a good-for-nothing idler and a fool”, he’ll say..."
 
         menu: 
             "I feel like you should take a day off to work out this whole...bug situation.":
                 jump sam_JOIN2
             "So you’re just...content with this?":
-                sam_idk "I guess so...Everyone has a job, right? Aren’t you doing yours right now?"
+                sam "I guess so...Everyone has a job, right? Aren’t you doing yours right now?"
                 menu:
                     "But you’re a bug! Bugs don’t work in accounting!":
                         show samsa hopeful
                         "A brief look of recognition hushes across Gregor’s face, or so you think."
                         jump sam_JOIN3
                     "I guess so":
-                        $ samPreBad = True
-                        jump sam_pre_BADEND
+                        $ samBad = True
+                        jump sam_BADEND
             "Tell me about it. My boss has been busting my balls for years now...":
-                $ samPreBad = True;
-                jump sam_pre_BADEND
+                $ samBad = True;
+                jump sam_BADEND
     
     label sam_JOIN2:
         "Gregor turns his head to look at you, making every plate in his neck creak. Each one of his thousands of eyes is filled with nothing but raw apathy."
-        
+        show samsa neutral
         sam "I’ve already taken three days off this year, I would get fired if I took any more."
         show samsa dejected
         sam "I haven’t even had time to visit family this year..."
@@ -143,6 +166,7 @@ label Samsa:
                         "Excited clicking fills the room as Gregor tells you about things he and his aunt used to get up to when he was younger."
                         
                         play sound "audio/sfx_doorslide.mp3" volume 1
+                        scene bg hallway with fade
                         "When you leave the compartment, your exoskeletal friend is positively buzzing. You smile as you think of a middle aged woman and her gigantic bug nephew conquering New Key City."
                         jump sam_GOODEND
 
@@ -164,35 +188,43 @@ label Samsa:
                 "When you leave the compartment, your exoskeletal friend is positively buzzing. You smile as you think of all the fun things Gregor will be getting up to today."
                 jump sam_GOODEND
     label sam_GOODEND:
-        $grandScore += 1
-    label sam_pre_BADEND:
-        if samPreBad:
+        play sound "<from 2 to 9>audio/sfx_footsteps.mp3" volume 1
+        "As you walk from Gregor’s compartment to the next, uncomfortable thoughts creep into your brain."
+        "Could you be a bug one random Monday morning?"
+        "You shiver at the thought. What do bugs even think about all day?"
+        "Flying from flower to flower…"
+        "You take a deep breath in...Flowers?"
+        "You approach the next compartment, looking for the scent’s source."
+        jump Pom
+
+    label sam_BADEND:
+        if samBad:
             show samsa dejected
-            sam_idk "See? We’re all just doing our jobs."
-            sam_idk "You talk to giant bug accountants, and I work spreadsheets for a living. Nothing that interesting about it..."
+            sam "See? We’re all just doing our jobs."
+            sam "You talk to giant bug accountants, and I work spreadsheets for a living. Nothing that interesting about it..."
             
+            "You both silently stare into nothing as you half-heartedly glance over the bug-man's ticket."
+            "With everything in order, you quietly step out of the compartment."
             play sound "audio/sfx_doorslide.mp3" volume 1
             scene bg hallway with fade
-    label sam_BADEND:
-        if samPreBad:
-        "nothing happens"
-            
-     
 
+   
 ##  POM CHARACTER ARC
 label Pom:
+    if not samBad:
+    $grandScore += 1
+    ## SCENE INTRO/DESCRIPTION
+    play sound "<from 0 to 3>audio/sfx_footsteps.mp3" volume 1
+    "Following the pleasant scent, you rap your knuckles against the next door and slide it open."
+    play sound "audio/sfx_doorslide.mp3" volume 1
     scene bg compartment
     with fade
-    play sound "audio/sfx_doorslide.mp3" volume 1
-    ## SCENE INTRO/DESCRIPTION
-    "You open the door to the compartment. As you enter, the train's gentle smell of worn leather and walnut wood fades,
-    and you pick up a new scent–freshly cut flowers and…wet dirt?"
+    "As you enter, the train's gentle smell of worn leather and walnut wood fades, replaced by freshly cut flowers and…wet dirt?"
 
     show pom neutral
     with moveinright
     
     "As you observe the passenger, you begin to understand."
-
     "Before you on the plush, blue velvet seats, a young man with wild hair stares out of the window. 
     As he turns and notices you, you hear a soft, kind voice escape his lips."
 
@@ -326,10 +358,9 @@ label Pom:
         pom "And they’ll still be quite nice for the city people to look at. It’s not everyday you get to show off your hard work to an entire city after all!"
 
         play sound "audio/sfx_doorslide.mp3" volume 1
-        scene bg hallway
+        scene bg hallway with fade
         "The smell of sweet peach roses and hopeful hyacinths follows you into the hallway as you close the sliding door behind you."
         "A smile hushes across your lips as you imagine Pom's beautiful flowers stunning all of New Key."
-        $ grandScore += 1
 
     label pom_BADEND:
         if pomBad:
@@ -338,12 +369,20 @@ label Pom:
             "The train comes to a slow stop at Rosegarden Station."
             "With his head hung low, the young man exits the train. The smell of roses fades, returning you to your world of leather and wood."
 
+label Pom2Wiz:
+    play sound "<from 5 to 10>audio/sfx_footsteps.mp3" volume .8
+    "The scent of lilies and roses follows you as you walk through the hall towards your next compartment."
+    "Though he was messy, Pom was not very difficult to handle."
+    "With confidence, you step towards the next compartment, excited to see who sits inside."
+
 ##  WIZARD CHARACTER ARC
 label Wizard:
+    if not pomBad:
+    $grandScore += 1
     label WizardIntro:
-        scene bg hallway with fade
-
+        scene bg hallway
         ## SCENE INTRO/DESCRIPTION
+        play sound "<from 5 to 10>audio/sfx_footsteps.mp3" volume .8
         "As you approach the door of the next passenger’s, a loud rumble, then a loud curse, then...silence."
         "Disquieted by the sudden absence, you carefully approach the door."
 
@@ -351,9 +390,10 @@ label Wizard:
         play sound "audio/sfx_explosion.mp3" volume 0.5
         show bg hallway with vpunch
         "You flinch. Not at the sudden yell, but the explosion that follows immediately after."
-
-        "Before you know what’s going on, the door comes to greet before you get a chance to, smashing both into you and the wall behind you."
+        play sound "<from 0 to 1.5>sfx_glassbreaking.mp3" volume 1
+        "Before you get the chance to open it, the door flies off its hinges, smashing both into you and the wall behind you."
         "With a slight cough, you throw the door aside and get back on your feet."
+
         show bg compartment with hpunch
         show wizard shadowed
         with dissolve
@@ -453,7 +493,6 @@ label Wizard:
             wiz "Ta, dear boy! I shall see you soon!"
             "As you face the hall, your new employer's cackle fills your ears, and your stomach turns again."
             "You dread your stay in New Key City."
-            $ grandScore += 1
             
         "“Not the first time”?":
             
@@ -477,12 +516,11 @@ label Wizard:
                             scene bg hallway
                             with fade
                             "A vile smell rises into your nose, making you wonder if its the odour or your conscience making your stomach turn as you watch the Wizard walk towards the next cart..."
-                            $ grandScore += 1
 
                 "Am I going to die?":
                     show wizard thinking
                     wiz "What are you, a coward? Or worse...a rat?"
-                    show wizard mad
+                    show wizard mad with vpunch
                     wiz "{b}A FILTHY RAT SENT BY THE COUNCIL TO SPY ON MY MACHINATIONS?{/b}"
                     $ wizBadPre = True;
                     jump wiz_pre_BADEND
@@ -499,12 +537,15 @@ label Wizard:
             show wizard mad
             "Magmodeus stares at you with white-hot rage glazing over his eyes."
             "Suddenly, he raises his arms as if to claw at you and hisses loudly."
-            wiz "Go ahead and try it, cretin! Nothing and no-one catches Magmodeus the Staunch, Greatest Wizad of All the Realms! I shall find more apprentices elsewhere and you shan’t stop me!"
+            show wizard mad with hpunch
+            wiz "Go ahead and try it, cretin! Nothing and no-one catches Magmodeus the Staunch, Greatest Wizad of All the Realms!"
+            wiz "I shall find more apprentices elsewhere and you shan’t stop me!"
             $ wizBad = True
             jump wiz_BADEND
     label wiz_BADEND:
             if wizBad:
                 play sound "audio/sfx_explosion.mp3" volume 1
+                play sound "<from 1.8 to 3.8>sfx_glassbreaking.mp3" volume 1
                 scene bg hallway
                 with hpunch
                 
@@ -514,6 +555,200 @@ label Wizard:
                 if knowApprentice:
                     "You shiver when you think of how many apprentices you sacrificed with your decisions here today."
 
-   
+label Wiz2Jones:
+    play sound "<from 9>audio/sfx_footsteps.mp3" volume .8
+    "You quake at the thought of what you just experienced."
+    "Who the hell was that man?"
+    "What was his deal?"
+    "Are Wizards real?!"
 
+    "You shake off the existential dread the rancid little man caused you and move on to the next compartment"
+    "Hopefully your next passenger is a little less…eccentric."
+#   ICICYLE JONES ARC
+label Jones:
+    if not wizBad:
+    $grandScore += 1
+    scene bg hallway
+    play sound "<from 0 to 5>audio/sfx_footsteps.mp3" volume .8
+    ## SCENE INTRO/DESCRIPTION
+    "An icy breeze rushes over you as you approach this compartment’s door."
+    "Stepping closer, you see that the windows have been poorly covered by animal furs. Peeking through them, you see random assortment of pelts fill each corner of the room." 
+    "A passenger, however, is nowhere to be seen."
+    
+    "Cautiously, you slide the door open and step into the compartment."
+    play sound "<from 0 to 1>audio/sfx_footsteps.mp3" volume .8
+    play sound "sfx_doorslide.mp3" volume 1
+    scene bg compartment with fade
+    show bg compartment with hpunch
+    "Suddenly, your life flashes before your eyes as you hear the cocking of a gun from a dark corner of the room before you."
+
+    show jones shadowed
+    "You see the silhouette of a man, a lion skin cape that looks more like roadkill than a trophy wrapped around his shoulders."
+    
+    jones_idk"Are you with the yeti?"
+    menu:
+        "There’s a yeti?!":
+            show jones wideeyed
+            jones_idk "Darn right!"
+            jones_idk "Same one drove me outta my home in the mountains, same one been chasin’ me fer nigh on four weeks now, that darn monster!"
+            jones "But if ye ain’t seen no yeti, clever ol’ Icicle Jones must’ve lost him..."
+
+            "The man, whom you assume to be Icicle Jones, lowers his gun."
+            show jones neutral
+            "His remaining eye beholds you with suspicion, but he seems to have calmed down for now."
+
+            menu:
+                "I, er, like your cloak.":
+                    show jones happy
+                    jones "Ah well thank you kindly!"
+                    jones "‘Tis the only thang Icicle Jones was able to bring from my mountain, my pelts and my trusty Jezabelle..."
+
+                    "Icicle Jones gentle strokes his gun before giving it a kiss and a rather violent sniff. He sighs."
+                    show jones neutral
+                    jones "But now that I ain’t got no mountain no more...I don’t really know what to do with any of ‘em no longer..."
+                    jump jones_JOIN3
+                "Is that why you’re on this train? Running from this...yeti?":
+                    "Darn right. Icicle Jones ain’t ever been one fer all these modern thangs, but I remembered that them long metal snakes were awful quick."
+                    show jones wideeyed
+                    "Too quick for a yeti!"
+                    jump jones_JOIN1
+        "{i}Years of training are about to pay off. Disarm the aggressor with your jiujitsu skills.{/i}":
+            "You’ve been waiting for this day."
+            "With a quick and elegant twist you spring into action, disarming your opponent and punting him across the room like a football."
+            show jones happy with vpunch
+            "He crashes into the far side wall of the room, coughing and cackling as he gets back up"
+
+            jones "Great mammoth’s balls! I ain’t been tossed around like that since that there yeti drove me from my cave!"
+            menu:
+                "Is that why you’re on this train? Running from this...yeti?":
+                    show jones neutral
+                    jones "Darn right. Icicle Jones ain’t ever been one fer all these modern thangs, but I remembered that them long metal snakes were awful quick."
+                    show jones happy
+                    jones "Too quick for a yeti"
+                    jump jones_JOIN1
+        "T-t-tickets please?":
+            show jones wideyed
+            jones "Even if I knew what that was, Icicle Jones wouldn’t’ve given ye any “tick-its”. Now tell me, where’s that gosh darn yeti?"
+            menu:
+                "Talisman Railroad Co. has a strict anti-monster code! There are no yetis anywhere near this train!":
+                    show jones happy
+                    jones "You don’t say...well, then this seems like just the place fer me!"
+                    jump jones_JOIN1
+                "Are you crazy? What yeti? Put that gun away before I call security!":
+                    jones "Don’t you threaten me, boah! I know that them yetis ain’t dumb!"
+                    jones "They's proberbly out there right now, huntin’ me..."
+                    menu:
+                        "I swear to you, there are no yetis aboard this train. As the conductor, I would know!":
+                            show jones neutral
+                            jones "Hmm...well if you ain’t heard of no yetis then maybe there ain’t no yetis on this here ve-hickle."
+                            jump jones_JOIN2
+                        "Alright, that’s it. Security!":
+                            jones "Oh, you think Icicle Jones is crazy?"
+                            jones "Them yetis are a plague upon this here earth, ya hear me! And I am gettin’ away from them and you ain’t stoppin’ m-"
+                            scene bg compartment_yeti with hpunch
+                            jump jones_BADEND
+
+    label jones_JOIN1:
+        "Icicle Jones stalks towards the window like a drunk mountain lion."
+        "He observes it for a few seconds, then smashes it with his raw fist before leaning out and yelling."
+
+        jones "There ain’t no catchin’ up with ol’ Icicle Jones now, you foul beast of the night!"
+        jones "You hear me! Icicle Jones is free!!"
+
+    label jones_JOIN2:
+        "He turns around and stares you down. You don’t know how much time passes as he simply...stands there."
+        "Then, without breaking eye contact, Icicle Jones awkwardly spins his gun in his now bloodied hand, getting tiny specks of blood and gun powder over the upholstery."
+        "Finally, he jams it into a ragged holster, made from an indiscernible number of rabbit furs."
+        #jump jones_JOIN3
+
+    label jones_JOIN3:
+        "Looking at his pelts you realise how fine they are."
+        "Were he not so...eccentric, he surely could make good money in New Key City."
+        "You wonder why he chooses to wear these horrid scraps instead."
+
+        jones "I ain’t never been to no city before, but I heard them city folk live comfy-like."
+        jones "Maybe them got warmer caves there!"
+        menu:   #MAJOR CHOICE 2
+            "You know, you could try to sell your pelts in town, that way you can get yourself a little money to start over!":
+                "Icicle Jones locks eyes with you."
+                "Slowly, his faces inches closer to yours until his big bushy beard is brushing against your chest."
+                "You try your best to ignore the...earthy scent that now invades your personal space."
+
+                jones "Yer sayin’ Icicle Jones could be...a businessman? Like them fancy types with a suit?"
+                menu:
+                    "Absolutely! You’ve got the charm, wit, and stunning good looks!":
+                        show jones happy
+                        jones "Icicle Jones is a mighty fine specimen, it’s true!"
+                        show jones wideeyed
+                        jones "That’s why Icicle Jones had ta flee, y’know? Darn yeti’s wife couldn’t keep her mitts off me!"
+                        show jones happy
+                        "Icicle Jones grins, then pulls your forehead against his."
+                        "You feel his greasy hair pressed between your faces as he whispers."
+                        show jones wideeyed with vpunch
+                        jones "But let me tell you, don’t you ever go fraternisin’ with no yeti-wives, no matter how charmin’ they may be!"
+                        jones "For I tell you, Icicle Jones is a peace-lovin’ man, but them yeti-husbands ain’t quite so!"
+
+                        "As he lets go of your head, you take a deep breath. You will take this advice to heart."
+
+                        show jones happy
+                        jones "Hoo-wee! This is gon’ be excitin’! Icicle Jones’s Pelt Emporium!"
+                        jones "Thank ye fer all yer thinkin’! Icicle Jones thinks the city’ll be fine!"
+
+                        "Icicle Jones excitedly starts talking to...probably himself about his business plans."
+                        "You’re sure he’ll make it big one day, he has the charm and the good looks after all."
+                        
+                        scene bg hallway with fade
+                        play sound "audio/sfx_doorslide.mp3" volume 1
+                        play sound "<from 2 to 10>audio/sfx_footsteps.mp3" volume .8
+                        "You leave the compartment and go on your way, a small rabbit’s foot now tied to your keychain."
+                        jump conclusion
+
+            "How does one even begin to get chased by a yeti?":
+                jones "Well...y’know. Icicle Jones is a handsome feller, and them yetis got pretty wives..."
+                show jones happy
+                "He grins through his thick beard. Then, he pulls you in close."
+                show jones wideeyed with vpunch
+                "You can feel your forehead rubbing against his, as he continues to speak."
+                jones "But let me tell you, don’t you ever go fraternisin’ with them yeti-wives, them yeti-husbands ain’t got no skill fer diplomacy."
+                jones "Icicle Jones is a peace lovin’ man, but them yetis ain’t quite so reasonable. Heed my words!!"
+                menu:
+                    "What’s your plan then?":
+                        show jones neutral
+                        jones "Icicle Jones hears that them city folks got bigger guns than me...and if’n I want my mountain back...well."
+                        show jones wideyed
+                        jones "Icicle Jones shan’t say...that is Icicle Jones’s business, and Icicle Jones’s business alone! Now scram!"
+
+                        "Finally, the Mountain Man lets go of your head and violently pushes you out the door."
+                        scene bg hallway with vpunch
+                        play sound "audio/sfx_doorslide.mp3" volume 1
+                        play sound "<from 10 to 15>audio/sfx_footsteps.mp3" volume .8
+                        "As you begin your walk to the next compartment, you realise that the yeti might be in more danger than Icicle Jones ever was."
+
+            "{i}Chuckle {/i} You’re not wrong, I’ve never had to worry about yetis chasing after me in my life.":
+                jones "Hoo-wee, that does sound quite nice. Icicle Jones is excited!"
+                jump jones_BADEND
+
+    label jones_BADEND:
+        if jonesBad:
+            "The train rumbles."
+            play sound "<from 0 to 1.5>sfx_glassbreaking.mp3" volume 1
+            "Suddenly, a gigantic, white-furred hand bursts through the window, grabbing Icicle Jones. You lock eyes with him as he's suddenly pulled back."
+            show jones distraught with vpunch
+            jones "NO!!! THIS AIN’T THE LAST YOU SEEN OF ICICLE JONES, I SWEAR IT!! I SWEAR BY-"
+            scene bg compartment with moveoutbottom
+            "With one, swift motion, Icicle Jones disappears from sight."
+            "Were it not for the copious amounts of pelts, shards of glass, and odd, earthy smell, you’d never think he’d been here in the first place."
+            
+            scene bg hallway with fade
+            play sound "audio/sfx_doorslide.mp3" volume 1
+            play sound "<from 6 to 13>audio/sfx_footsteps.mp3" volume .8
+            "As you step back into the hallway, you nervously glance toward the windows. Maybe you aren’t safe from the yeti either..."
+
+label conclusion:
+    if grandScore == 0:
+        "F!!"
+    elif grandScore == 4:
+        "A+!!"
+    else:
+        "C"
 return
