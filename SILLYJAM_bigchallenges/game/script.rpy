@@ -608,9 +608,9 @@ label Jones:
                     jones "But now that I ain’t got no mountain no more...I don’t really know what to do with any of ‘em no longer..."
                     jump jones_JOIN3
                 "Is that why you’re on this train? Running from this...yeti?":
-                    "Darn right. Icicle Jones ain’t ever been one fer all these modern thangs, but I remembered that them long metal snakes were awful quick."
+                    jones "Darn right. Icicle Jones ain’t ever been one fer all these modern thangs, but I remembered that them long metal snakes were awful quick."
                     show jones wideeyed
-                    "Too quick for a yeti!"
+                    jones"Too quick for a yeti!"
                     jump jones_JOIN1
         "{i}Years of training are about to pay off. Disarm the aggressor with your jiujitsu skills.{/i}":
             "You’ve been waiting for this day."
@@ -728,8 +728,8 @@ label Jones:
                         "As you begin your walk to the next compartment, you realise that the yeti might be in more danger than Icicle Jones ever was."
 
             "{i}Chuckle {/i} You’re not wrong, I’ve never had to worry about yetis chasing after me in my life.":
-                
                 jones "Hoo-wee, that does sound quite nice. Icicle Jones is excited!"
+                $ jonesBad = True
                 jump jones_BADEND
 
     label jones_BADEND:
