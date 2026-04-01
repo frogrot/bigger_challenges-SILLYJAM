@@ -9,7 +9,7 @@ define sam_idk = Character("Looming Insect")
 define sam = Character("Gregor Samsa", color="#305f54")
 
 define jones_idk = Character("Violent Man")
-define jones = Character("Icycle Jones", color = "#86634d")
+define jones = Character("Icicle Jones", color = "#86634d")
 
 ## VARIABLES
 define grandScore = 0 
@@ -729,6 +729,7 @@ label Jones:
 
             "{i}Chuckle {/i} You’re not wrong, I’ve never had to worry about yetis chasing after me in my life.":
                 jones "Hoo-wee, that does sound quite nice. Icicle Jones is excited!"
+                show bg compartment_yeti with dissolve
                 $ jonesBad = True
                 jump jones_BADEND
 
@@ -736,11 +737,12 @@ label Jones:
         if jonesBad:
             $grandScore -= 1
             "The train rumbles."
+            
             play sound "<from 0 to 1.5>sfx_glassbreaking.mp3" volume 1
             "Suddenly, a gigantic, white-furred hand bursts through the window, grabbing Icicle Jones. You lock eyes with him as he's suddenly pulled back."
-            show jones distraught with vpunch
+            show jones wideeyed with vpunch
             jones "NO!!! THIS AIN’T THE LAST YOU SEEN OF ICICLE JONES, I SWEAR IT!! I SWEAR BY-"
-            scene bg compartment with moveoutbottom
+            scene bg compartment_yeti with moveoutbottom
             "With one, swift motion, Icicle Jones disappears from sight."
             "Were it not for the copious amounts of pelts, shards of glass, and odd, earthy smell, you’d never think he’d been here in the first place."
             
@@ -751,7 +753,7 @@ label Jones:
             
 
 label conclusion:
-    if grandScore == -3:
+    if grandScore == -4:
         scene bg bad with fade
         $ renpy.pause()
         scene bg bad2 with fade
